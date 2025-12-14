@@ -13,7 +13,11 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchIpos = async () => {
       try {
-        const { data } = await axios.get('/api/ipos');
+        // logic: If we are on localhost, use local backend. If live, use the Render URL.
+        // We will fill in the 'REACT_APP_API_URL' later in Vercel.
+        const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000'; 
+        
+        const { data } = await axios.get(`${baseUrl}/api/ipos`);
         setIpos(data);
         setLoading(false);
       } catch (error) {
